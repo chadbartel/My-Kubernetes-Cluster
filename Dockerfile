@@ -1,7 +1,7 @@
 FROM amd64/ubuntu:18.04
 
-RUN apt-get install update -y
-RUN apt-get install upgrade -y
-RUN apt-get install git -y
+RUN apt-get update 
+RUN apt-get install -y apt-transport-https
+RUN apt-get install -y git
 
 CMD /bin/bash
