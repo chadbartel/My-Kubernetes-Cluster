@@ -11,8 +11,7 @@ metadata: # This is the cluster metadata configuration
   labels: 
     environment: production
 
-# A node is a set of "worker" machines that run containerized 
-# applications. Every cluster has at least one worker node.
+# A node is a set of instances that run containerized applications.
 # Essentially, the nodes are the things will run the code and all the other 
 # stuff executed by the control plane.
 nodeGroups: # This is the cluster node group configuration(s)
