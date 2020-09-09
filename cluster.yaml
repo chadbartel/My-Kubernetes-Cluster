@@ -20,11 +20,11 @@ nodeGroups: # This is the cluster node group configuration(s)
     desiredCapacity: 0 # This node should endeavor to have 0 instances for any work
     minSize: 0  # When not in use, scale down to 0
     maxSize: 10 # When the work exceeds capacity of 5 instances, scale up to 10
-    privateNetworking: true # Launch the instances in this node in private subnets
     volumeSize: 80  # Launch instances with 80Gb storage volumes
     volumeType: gp2 # Launch instances with gp2 storage volume type
     ami: auto # Automatically select the AMI
     amiFamily: AmazonLinux2 # Select an AMI in the AmazonLinux2 OS family
+    privateNetworking: true # Launch the instances in this node in private subnets
     ssh:  # Will use ~/.ssh/id_rsa.pub as the default ssh key
       allow: true
     labels: # Simple labels to identify for autoscaling
@@ -40,11 +40,11 @@ nodeGroups: # This is the cluster node group configuration(s)
     desiredCapacity: 0  # This node should endeavor to have 0 instances for any build
     minSize: 0  # When not in use, scale down to 0
     maxSize: 5  # When the work exceeds capacity of 2 instances, scale up to 5
-    privateNetworking: true # Launch the instances in this node in private subnets
     volumeSize: 100 # Launch instances with 80Gb storage volumes
     volumeType: gp2 # Launch instances with gp2 storage volume type
     ami: auto # Automatically select the AMI
     amiFamily: AmazonLinux2 # Select an AMI in the AmazonLinux2 OS family
+    privateNetworking: true # Launch the instances in this node in private subnets
     ssh:
       publicKeyPath: ~/.ssh/ec2_id_rsa.pub
     labels: # Simple labels to identify for autoscaling
@@ -55,3 +55,23 @@ nodeGroups: # This is the cluster node group configuration(s)
     tags: # These ASG tags enable the node to automatically scale up from 0 instances
       k8s.io/cluster-autoscaler/node-template/label/ng-2-asg-label: ng-2-asg-label
       k8s.io/cluster-autoscaler/node-template/taint/ng-2-asg-taint: "true:NoSchedule"
+  - name: ng-3-jenkins  # This is the Jenkins node group
+      instanceType: t2.micro
+      desiredCapacity: 0
+      minSize: 0
+      maxSize: 25
+      volumeSize: 8
+      volumeType: gp2
+      ami: auto
+      amiFamily: AmazonLinux2
+      privateNetworking: true
+      ssh:
+        publicKeyPath: ~/.ssh/ec2_id_rsa.pub
+      labels: # Simple labels to identify for autoscaling
+        role: jenkins
+        ng-3-asg-label: ng-3-asg-label
+      taints: # Simple node taint that will not allow any pods to be scheduled unless it has a matching toleration
+        ng-3-asg-taint: "true:NoSchedule"
+      tags: # These ASG tags enable the node to automatically scale up from 0 instances
+        k8s.io/cluster-autoscaler/node-template/label/ng-3-asg-label: ng-3-asg-label
+        k8s.io/cluster-autoscaler/node-template/taint/ng-3-asg-taint: "true:NoSchedule"
