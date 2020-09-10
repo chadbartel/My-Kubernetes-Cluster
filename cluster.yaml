@@ -33,8 +33,17 @@ nodeGroups: # This is the cluster node group configuration(s)
     taints: # Simple node taint that will not allow any pods to be scheduled unless it has a matching toleration
       ng-1-asg-taint: "true:NoSchedule"
     tags: # These ASG tags enable the node to automatically scale up from 0 instances
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/cluster-13: "owned"
       k8s.io/cluster-autoscaler/node-template/label/ng-1-asg-label: ng-1-asg-label
       k8s.io/cluster-autoscaler/node-template/taint/ng-1-asg-taint: "true:NoSchedule"
+    iam:  # Launch this node with the following IAM policies
+      withAddonPolicies:
+        imageBuilder: true  # Launch with access to EC2 Image Builder service
+        autoScaler: true  # Launch with access to Auto Scaling service
+        ebs: true # Launch with access to EBS service
+        albIngress: true  # Launch with access to Application Load Balancing service
+        cloudWatch: true  # Launch with access to CloudWatch service
   - name: ng-2-builders # This is the builder node group
     instanceType: m5.xlarge # Launch instances of the type m5.xlarge
     desiredCapacity: 0  # This node should endeavor to have 0 instances for any build
@@ -53,9 +62,18 @@ nodeGroups: # This is the cluster node group configuration(s)
     taints: # Simple node taint that will not allow any pods to be scheduled unless it has a matching toleration
       ng-2-asg-taint: "true:NoSchedule"
     tags: # These ASG tags enable the node to automatically scale up from 0 instances
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/cluster-13: "owned"
       k8s.io/cluster-autoscaler/node-template/label/ng-2-asg-label: ng-2-asg-label
       k8s.io/cluster-autoscaler/node-template/taint/ng-2-asg-taint: "true:NoSchedule"
-  - name: ng-3-jenkins  # This is the Jenkins node group
+    iam:  # Launch this node with the following IAM policies
+      withAddonPolicies:
+        imageBuilder: true  # Launch with access to EC2 Image Builder service
+        autoScaler: true  # Launch with access to Auto Scaling service
+        ebs: true # Launch with access to EBS service
+        albIngress: true  # Launch with access to Application Load Balancing service
+        cloudWatch: true  # Launch with access to CloudWatch service
+  - name: ng-3-jenkins  # This is the Jenkins node group... but not really cuz it doesn't have a Jenkins image...
       instanceType: t2.micro
       desiredCapacity: 0
       minSize: 0
@@ -73,5 +91,14 @@ nodeGroups: # This is the cluster node group configuration(s)
       taints: # Simple node taint that will not allow any pods to be scheduled unless it has a matching toleration
         ng-3-asg-taint: "true:NoSchedule"
       tags: # These ASG tags enable the node to automatically scale up from 0 instances
+        k8s.io/cluster-autoscaler/enabled: "true"
+        k8s.io/cluster-autoscaler/cluster-13: "owned"
         k8s.io/cluster-autoscaler/node-template/label/ng-3-asg-label: ng-3-asg-label
         k8s.io/cluster-autoscaler/node-template/taint/ng-3-asg-taint: "true:NoSchedule"
+      iam:  # Launch this node with the following IAM policies
+        withAddonPolicies:
+          imageBuilder: true  # Launch with access to EC2 Image Builder service
+          autoScaler: true  # Launch with access to Auto Scaling service
+          ebs: true # Launch with access to EBS service
+          albIngress: true  # Launch with access to Application Load Balancing service
+          cloudWatch: true  # Launch with access to CloudWatch service
