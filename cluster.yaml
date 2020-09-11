@@ -44,6 +44,8 @@ nodeGroups: # This is the cluster node group configuration(s)
         ebs: true # Launch with access to EBS service
         albIngress: true  # Launch with access to Application Load Balancing service
         cloudWatch: true  # Launch with access to CloudWatch service
+        certManager: true # Launch with access to AWS Certificate Manager service
+        appMesh: true # Launch with access to AWS App Mesh service
   - name: ng-2-builders # This is the builder node group
     instanceType: m5.xlarge # Launch instances of the type m5.xlarge
     desiredCapacity: 0  # This node should endeavor to have 0 instances for any build
@@ -73,6 +75,8 @@ nodeGroups: # This is the cluster node group configuration(s)
         ebs: true # Launch with access to EBS service
         albIngress: true  # Launch with access to Application Load Balancing service
         cloudWatch: true  # Launch with access to CloudWatch service
+        certManager: true # Launch with access to AWS Certificate Manager service
+        appMesh: true # Launch with access to AWS App Mesh service
   - name: ng-3-jenkins  # This is the Jenkins node group... but not really cuz it doesn't have a Jenkins image...
       instanceType: t2.micro
       desiredCapacity: 0
@@ -102,3 +106,5 @@ nodeGroups: # This is the cluster node group configuration(s)
           ebs: true # Launch with access to EBS service
           albIngress: true  # Launch with access to Application Load Balancing service
           cloudWatch: true  # Launch with access to CloudWatch service
+          certManager: true # Launch with access to AWS Certificate Manager service
+          appMesh: true # Launch with access to AWS App Mesh service
