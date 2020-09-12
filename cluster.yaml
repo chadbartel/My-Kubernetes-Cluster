@@ -46,6 +46,22 @@ nodeGroups: # This is the cluster node group configuration(s)
         cloudWatch: true  # Launch with access to CloudWatch service
         certManager: true # Launch with access to AWS Certificate Manager service
         appMesh: true # Launch with access to AWS App Mesh service
+    kubeletExtraConfig:
+      kubeReserved:
+        cpu: "300m"
+        memory: "300Mi"
+        ephemeral-storage: "1Gi"
+      kubeReservedCgroup: "/kube-reserved"
+      systemReserved:
+        cpu: "300m"
+        memory: "300Mi"
+        ephemeral-storage: "1Gi"
+      evictionHard:
+        memory.available:  "200Mi"
+        nodefs.available: "10%"
+      featureGates:
+        DynamicKubeletConfig: true
+        RotateKubeletServerCertificate: true # has to be enabled, otherwise it will be disabled
   - name: ng-2-builders # This is the builder node group
     instanceType: m5.xlarge # Launch instances of the type m5.xlarge
     desiredCapacity: 0  # This node should endeavor to have 0 instances for any build
@@ -77,6 +93,22 @@ nodeGroups: # This is the cluster node group configuration(s)
         cloudWatch: true  # Launch with access to CloudWatch service
         certManager: true # Launch with access to AWS Certificate Manager service
         appMesh: true # Launch with access to AWS App Mesh service
+    kubeletExtraConfig:
+      kubeReserved:
+        cpu: "300m"
+        memory: "300Mi"
+        ephemeral-storage: "1Gi"
+      kubeReservedCgroup: "/kube-reserved"
+      systemReserved:
+        cpu: "300m"
+        memory: "300Mi"
+        ephemeral-storage: "1Gi"
+      evictionHard:
+        memory.available:  "200Mi"
+        nodefs.available: "10%"
+      featureGates:
+        DynamicKubeletConfig: true
+        RotateKubeletServerCertificate: true # has to be enabled, otherwise it will be disabled
   - name: ng-3-jenkins  # This is the Jenkins node group... but not really cuz it doesn't have a Jenkins image...
       instanceType: t2.micro
       desiredCapacity: 0
@@ -108,3 +140,19 @@ nodeGroups: # This is the cluster node group configuration(s)
           cloudWatch: true  # Launch with access to CloudWatch service
           certManager: true # Launch with access to AWS Certificate Manager service
           appMesh: true # Launch with access to AWS App Mesh service
+      kubeletExtraConfig:
+        kubeReserved:
+          cpu: "300m"
+          memory: "300Mi"
+          ephemeral-storage: "1Gi"
+        kubeReservedCgroup: "/kube-reserved"
+        systemReserved:
+          cpu: "300m"
+          memory: "300Mi"
+          ephemeral-storage: "1Gi"
+        evictionHard:
+          memory.available:  "200Mi"
+          nodefs.available: "10%"
+        featureGates:
+          DynamicKubeletConfig: true
+          RotateKubeletServerCertificate: true # has to be enabled, otherwise it will be disabled
