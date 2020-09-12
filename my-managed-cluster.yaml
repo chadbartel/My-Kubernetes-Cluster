@@ -4,20 +4,24 @@ kind: ClusterConfig # This tells Kubernetes how to interpret the file contents
 metadata: # This is the cluster metadata configuration
   name: my-managed-cluster
   region: us-west-2
+  version: 1.17
+  tags: {}
+
+vpc:
+  id: <my-virtual-private-cloud>
+  securityGroup: <my-default-security-group>
+  subnets:
+    private:
+      us-west-2a:
+        id: <private-subnet-us-west-2a>
+      us-west-2b:
+        id: <private-subnet-us-west-2b>
 
 privateCluster: # Set the cluster to be fully private
   enabled: true
   additionalEndpointServices:
   - "autoscaling"
   - "cloudformation"
-
-vpc:
-  subnets:
-    private:
-      us-west-2a:
-        id: subnet-052a58d5c99dd6c61
-      us-west-2b:
-        id: subnet-04b6e0b07449332c9
 
 # A node is a set of instances that run containerized applications.
 # Essentially, the nodes are the things will run the code and all the other 
@@ -34,7 +38,7 @@ managedNodeGroups: # This is the cluster node group configuration(s)
     amiFamily: AmazonLinux2 # Select an AMI in the AmazonLinux2 OS family
     privateNetworking: true # Launch the instances in this node in private subnets
     securityGroups:
-      attachIDs: ["sg-091151c22af3cca12"]
+      attachIDs: ["<my-default-security-group>"]
     ssh:  # Will use ~/.ssh/id_rsa.pub as the default ssh key
       allow: true
     labels: # Simple labels to identify for autoscaling
@@ -66,7 +70,7 @@ managedNodeGroups: # This is the cluster node group configuration(s)
     amiFamily: AmazonLinux2 # Select an AMI in the AmazonLinux2 OS family
     privateNetworking: true # Launch the instances in this node in private subnets
     securityGroups:
-      attachIDs: ["sg-091151c22af3cca12"]
+      attachIDs: ["<my-default-security-group>"]
     ssh:
       publicKeyPath: ~/.ssh/ec2_id_rsa.pub
     labels: # Simple labels to identify for autoscaling
